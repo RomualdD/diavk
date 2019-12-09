@@ -1,0 +1,221 @@
+<app-menu></app-menu>
+<div *ngIf="auth" class="container-fluid">
+  <div class="offset-5 col-md-6" style="font-size: 2em; color: red; margin-bottom: 10px;">
+    Votre profil
+  </div>
+  <div class="offset-3 col-md-8 fond">
+    <div class="row mb-2">
+      <label class="col-md-3 col-form-label" for="lastnameId">Nom :</label>
+      <div class="col-md-8">
+        <input type="text" class="form-control" id="lastnameId" value="{{user.lastname}}" readonly>
+      </div>
+    </div>
+    <div class="row mb-2">
+      <label class="col-md-3 col-form-label" for="firstnameId">Prénom :</label>
+      <div class="col-md-8">
+        <input type="text" class="form-control" id="firstnameId" value="{{user.firstname}}" readonly>
+      </div>
+    </div>
+    <div class="row mb-2">
+      <label class="col-md-3 col-form-label" for="birthdateId">Date de naissance :</label>
+      <div class="col-md-8">
+        <input type="text" class="form-control" id="birthdateId" value="{{user.birthdate | date: 'dd/MM/y'}}" readonly>
+      </div>
+    </div>
+    <div class="row mb-2">
+      <label class="col-md-3 col-form-label" for="mailId">Adresse mail :</label>
+      <div class="col-md-8">
+        <input type="text" class="form-control" id="mailId" value="{{user.mail}}" readonly>
+      </div>
+    </div>
+    <div class="row mb-2">
+      <label class="col-md-3 col-form-label" for="phoneId">N° téléphone :</label>
+      <div class="col-md-8">
+        <input type="text" class="form-control" id="phoneId" value="{{user.phone}}" readonly>
+      </div>
+    </div>
+    <div class="row mb-2">
+      <label class="col-md-3 col-form-label" for="phone2Id">2nd n° téléphone :</label>
+      <div class="col-md-8">
+        <input type="text" class="form-control" id="phone2Id" value="{{user.phone2}}" readonly>
+      </div>
+    </div>
+    <hr>
+    <div class="offset-3 col-md-6" style="margin-bottom: 10px; color: red;">
+      Préférence
+    </div>
+    <div *ngIf="preference.verification != undefined">
+      <div class="row mb-2">
+        <label class="col-md-3 col-form-label" for="verification">Envoie tous les :</label>
+        <div class="col-md-8">
+          <input type="text" class="form-control" value="{{preference.verification}}" readonly>
+        </div>
+      </div>
+      <div class="row mb-2">
+        <label class="col-md-3 col-form-label" for="one_hour">1ère heure choisie :</label>
+        <div class="col-md-8">
+          <input type="time" class="form-control" value="{{preference.one_hour}}" readonly>
+        </div>
+      </div>
+      <div *ngIf="preference.verification == 'Heure'">
+        <div class="row mb-2">
+          <label class="col-md-3 col-form-label" for="second_hour">2ème heure choisie :</label>
+          <div class="col-md-8">
+            <input type="time" class="form-control" value="{{preference.two_hour}}" readonly>
+          </div>
+        </div>
+        <div class="row mb-2">
+          <label class="col-md-3 col-form-label" for="three_hour">3ème heure choisie :</label>
+          <div class="col-md-8">
+            <input type="time" class="form-control" value="{{preference.three_hour}}" readonly>
+          </div>
+        </div>
+        <div class="row mb-2">
+          <label class="col-md-3 col-form-label" for="four_hour">4ème heure choisie :</label>
+          <div class="col-md-8">
+            <input type="time" class="form-control" value="{{preference.four_hour}}" readonly>
+          </div>
+        </div>
+      </div>
+      <div class="row mb-2">
+        <label class="col-md-3 col-form-label" for="notification">Notification :</label>
+        <div class="col-md-8">
+          <input type="text" class="form-control" value="{{preference.notification}}" readonly>
+        </div>
+      </div>
+      <div class="row mb-2">
+        <label class="col-md-3 col-form-label" for="date">Prochaine date de prise :</label>
+        <div class="col-md-8">
+          <input type="text" class="form-control" value="{{preference.verification_date | date: 'dd/MM/yyyy'}}" readonly>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="preference.verification == undefined">
+      <form (ngSubmit)="addPreference()" [formGroup]="preferenceForm">
+        <div class="form-group row mb-2">
+          <label for="verification" class="col-md-3">Vérification par : (requis)</label>
+          <div class="col-md-8">
+            <label class="col-md-4">
+              <input type="radio" value="1" formControlName="verification">
+              <span>Heure</span>
+            </label>
+            <label class="col-md-4">
+              <input type="radio" value="2" formControlName="verification">
+              <span>Jour</span>
+            </label>
+            <label class="col-md-4">
+              <input type="radio" value="3" formControlName="verification">
+              <span>Semaine</span>
+            </label>
+            <label class="col-md-4">
+              <input type="radio" value="4" formControlName="verification">
+              <span>2 Semaines</span>
+            </label>
+            <label class="col-md-4">
+              <input type="radio" value="5" formControlName="verification">
+              <span>3 Semaines</span>
+            </label>
+            <label class="col-md-4">
+              <input type="radio" value="6" formControlName="verification">
+              <span>Mois</span>
+            </label>
+          </div>
+        </div>
+        <div class="form-group row mb-2">
+          <label for="one_hourID" class="col-md-3">1ère heure</label>
+          <div class="col-md-8">
+            <input type="time"  class="form-control" id="one_hourID" placeholder="Première heure" formControlName="one_hour" [ngClass]="{'is-invalid': (preferenceForm.get('one_hour').touched || preferenceForm.get('one_hour').dirty) && !preferenceForm.get('one_hour').valid }">
+            <span class="invalid-feedback">
+              <span *ngIf="preferenceForm.get('one_hour').errors?.required">
+                Veuillez entrez une heure.
+              </span>
+            </span>
+          </div>
+        </div>
+        <div *ngIf="preferenceForm.get('verification').value == '1'">
+          <div class="form-group row mb-2">
+            <label for="two_hourID" class="col-md-3">2ème heure</label>
+            <div class="col-md-8">
+              <input type="time"  class="form-control" id="two_hourID" placeholder="Deuxième heure" formControlName="two_hour">
+              <span class="error">
+                <span>
+                  {{errorHourOne}}
+                </span>
+              </span>
+            </div>
+          </div>
+          <div class="form-group row mb-2">
+            <label for="thre_hourID" class="col-md-3">3ème heure</label>
+            <div class="col-md-8">
+              <input type="time"  class="form-control" id="three_hourID" placeholder="Troisième heure" formControlName="three_hour">
+              <span class="error">
+                <span>
+                  {{errorHourTwo}}
+                </span>
+              </span>
+            </div>
+          </div>
+          <div class="form-group row mb-2">
+            <label for="four_hourID" class="col-md-3">4ème heure</label>
+            <div class="col-md-8">
+              <input type="time"  class="form-control" id="four_hourID" placeholder="Quatrième heure" formControlName="four_hour">
+              <span class="error">
+                <span>
+                  {{errorHourThree}}
+                </span>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="form-group row mb-2">
+          <label for="notification" class="col-md-3">Notification : (requis)</label>
+          <div class="col-md-8">
+            <label class="col-md-4">
+              <input type="radio" value="1" formControlName="notification">
+              <span>Mail</span>
+            </label>
+            <label class="col-md-4">
+              <input type="radio" value="2" formControlName="notification">
+              <span>SMS</span>
+            </label>
+          </div>
+        </div>
+        <div class="form-group row mb-2">
+          <label for="verification_date" class="col-md-3">Première date de vérification :</label>
+          <div class="col-md-8">
+            <input type="date" class="form-control" id="verification_dateID" placeholder="Première date de vérification" formControlName="verification_date" [ngClass]="{'is-invalid': (preferenceForm.get('verification_date').touched || preferenceForm.get('verification_date').dirty) && !preferenceForm.get('verification_date').valid }">
+            <span class="invalid-feedback">
+              <span *ngIf="preferenceForm.get('verification_date').errors?.required">
+                Veuillez entrez une date.
+              </span>
+            </span>
+            <span>
+              <span class="error">
+                {{ errorDate }}
+              </span>
+            </span>
+          </div>
+        </div>
+        <div class="form-group row mb-3">
+          <div class="offset-md-3 col-md-8">
+            <button class="btn btn-primary mr-3"
+            type="submit"
+            [title]="preferenceForm.valid ? 'Enregistrer' : 'Corriger les erreurs avant de Sauvegarder'"
+            [disabled]="!preferenceForm.valid">
+            Enregistrer
+          </button>
+        </div>
+      </div>
+      </form>
+    </div>
+    <hr>
+    <div class="row mb-2">
+      <div class="offset-3">
+        <img src="{{user.qrcode}}" alt="qrcode">
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid" *ngIf="!auth">
+  Vous devez être connecté pour voir votre
+</div>

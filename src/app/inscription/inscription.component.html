@@ -1,0 +1,155 @@
+<app-menu></app-menu>
+<div class="container-fluid">
+  <div class="offset-5 col-md-6" style="font-size: 2em; color: red; margin-bottom: 10px;">
+    Inscription
+  </div>
+  <div class="offset-3 col-md-8 fond">
+    <form (ngSubmit)="addUser()" [formGroup]="userForm">
+      <div class="form-group row mb-2">
+        <label class="col-md-3 col-form-label" for="firstnameId">Prénom :</label>
+        <div class="col-md-8">
+          <input type="text" class="form-control" id="firstnameId" placeholder="Prénom (requis)" formControlName="firstname" [ngClass]="{'is-invalid': (userForm.get('firstname').touched || userForm.get('firstname').dirty) && !userForm.get('firstname').valid }">
+          <span class="invalid-feedback">
+            <span *ngIf="userForm.get('firstname').errors?.required">
+              Veuillez entrez votre prénom.
+            </span>
+            <span *ngIf="userForm.get('firstname').errors?.minlength">
+              Votre prénom doit faire plus de 3 charactères.
+            </span>
+          </span>
+        </div>
+      </div>
+      <div class="form-group row mb-2">
+        <label for="lastnameId" class="col-md-3 col-form-label">Nom de Famille :</label>
+        <div class="col-md-8">
+          <input type="text" class="form-control" id="lastnameId" placeholder="Nom de famille (requis)" formControlName="lastname" [ngClass]="{'is-invalid': (userForm.get('lastname').touched || userForm.get('lastname').dirty) && !userForm.get('lastname').valid }">
+          <span class="invalid-feedback">
+            <span *ngIf="userForm.get('firstname').errors?.required">
+              Veuillez entrez votre nom de famille.
+            </span>
+            <span *ngIf="userForm.get('firstname').errors?.maxlength">
+              Votre nom doit faire moins de 50 charactères.
+            </span>
+          </span>
+        </div>
+      </div>
+      <div formGroupName="passwordGroup">
+        <div class="form-group row mb-2">
+          <label for="passwordId" class="col-md-3 col-form-label">Mot de passe :</label>
+          <div class="col-md-8">
+            <input type="password" id="passwordId" class="form-control" placeholder="Mot de passe (requis)" formControlName="password" [ngClass]="{'is-invalid' : passwordMessage }">
+            <span class="invalid-feedback">
+              {{passwordMessage}}
+            </span>
+          </div>
+        </div>
+        <div class="form-group row mb-2">
+          <label for="confirmPasswordId" class="col-md-3 col-form-label">Confirmation mot de passe :</label>
+          <div class="col-md-8">
+            <input type="password" id="confirmPasswordId" class="form-control" placeholder="Confirmation mot de passe" formControlName="confirmPassword" [ngClass]="{'is-invalid' : userForm.get('passwordGroup').errors }">
+            <span class="invalid-feedback">
+              <span *ngIf="userForm.get('passwordGroup.confirmPassword').errors?.required">Confirmez votre mot de passe.</span>
+              <span *ngIf="userForm.get('passwordGroup').errors?.match">La confirmation ne correspond pas à votre mot de passe.</span>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div formGroupName="mailGroup">
+        <div class="form-group row mb-2">
+          <label for="mailId" class="col-md-3 col-form-label">Adresse mail :</label>
+          <div class="col-md-8">
+            <input type="email" id="mailId" class="form-control" placeholder="Mail" formControlName="mail" [ngClass]="{'is-invalid': mailMessage }">
+            <span class="invalid-feedback">{{mailMessage}}</span>
+          </div>
+        </div>
+        <div class="form-group row mb-2">
+          <label for="confirmMailId" class="col-md-3 col-form-label">Confirmation adresse mail :</label>
+          <div class="col-md-8">
+            <input class="form-control" id="confirmMailId" type="email" placeholder="Confirmation adresse mail (requis)" formControlName="confirmMail" [ngClass]="{'is-invalid' : userForm.get('mailGroup').errors || ((userForm.get('mailGroup.confirmMail').touched || userForm.get('mailGroup.confirmMail').dirty) && !userForm.get('mailGroup.confirmMail').valid) }">
+            <span class="invalid-feedback">
+              <span *ngIf="userForm.get('mailGroup.confirmMail').errors?.required">Confirmez votre adresse mail.</span>
+              <span *ngIf="userForm.get('mailGroup').errors?.match">La confirmation ne correspond pas à l'adresse mail entrée précédemment.</span>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row mb-2">
+        <label for="birthdateId" class="col-md-3 col-form-label">Date de naissance :</label>
+        <div class="col-md-8">
+          <input type="date" class="form-control" id="birthdateId" formControlName="birthdate">
+        </div>
+      </div>
+      <div class="form-group row mb-2">
+        <label for="phoneId" class="col-md-3 col-form-label">Téléphone :</label>
+        <div class="col-md-8">
+          <input type="tel" class="form-control" id="phoneId" formControlName="phone" [ngClass]="{'is-invalid' :(userForm.get('phone').touched || userForm.get('phone').dirty) && !userForm.get('phone').valid}">
+          <span class="invalid-feedback">
+            <span *ngIf="userForm.get('phone').errors?.minlength">
+              Votre numéro de téléphone doit faire 10 chiffres.
+            </span>
+            <span *ngIf="userForm.get('phone').errors?.maxlength">
+              Votre numéro de téléphone doit faire 10 chiffres.
+            </span>
+          </span>
+        </div>
+      </div>
+      <div class="form-group row mb-2">
+        <label for="phone2Id" class="col-md-3 col-form-label">Téléphone 2 :</label>
+        <div class="col-md-8">
+          <input type="tel" class="form-control" id="phone2Id" formControlName="phone2" [ngClass]="{'is-invalid' :(userForm.get('phone2').touched || userForm.get('phone2').dirty) && !userForm.get('phone2').valid}">
+          <span class="invalid-feedback">
+            <span *ngIf="userForm.get('phone2').errors?.maxlength">
+              Votre numéro de téléphone doit faire 10 chiffres.
+            </span>
+            <span *ngIf="userForm.get('phone2').errors?.minlength">
+              Votre numéro de téléphone doit faire 10 chiffres.
+            </span>
+          </span>
+        </div>
+      </div>
+      <div class="form-group row mb-2">
+        <label for="role" class="col-md-3">Rôle :</label>
+        <div class="col-md-8">
+          <label class="col-md-4">
+            <input type="radio" value="1" formControlName="role">
+            <span>Médecin</span>
+          </label>
+          <label class="col-md-4">
+            <input type="radio" value="2" formControlName="role">
+            <span>Patient</span>
+          </label>
+        </div>
+      </div>
+      <div *ngIf="userForm.get('role').value == 2">
+        <div class="form-group row mb-2">
+          <label for="role" class="col-md-3">Pathologie :</label>
+          <div class="col-md-8">
+            <label class="col-md-4">
+              <input type="radio" value="1" formControlName="pathology">
+              <span>Diabétique 1</span>
+            </label>
+            <label class="col-md-4">
+              <input type="radio" value="2" formControlName="pathology">
+              <span>Diabétique 2</span>
+            </label>
+            <label class="col-md-4">
+              <input type="radio" value="3" formControlName="pathology">
+              <span>Sous AVK</span>
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row mb-3">
+        <div class="offset-md-2 col-md-8">
+          <button class="btn btn-primary mr-3"
+          type="submit"
+          [title]="userForm.valid ? 'Save your entered data' : 'Disabled until the form data is valid'"
+          [disabled]="!userForm.valid">
+          Enregistrer
+        </button>
+      </div>
+    </div>
+    <p style="color: red;">{{messageError}}</p>
+  </form>
+</div>
+</div>

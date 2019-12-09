@@ -1,0 +1,71 @@
+<app-menu></app-menu>
+<div *ngIf="auth" class="container-fluid">
+  <div class="offset-5 col-md-6" style="font-size: 2em; color: red; margin-bottom: 10px;">
+    Vos rendez-vous
+  </div>
+  <div class="offset-3 col-md-8 fond">
+    <div class="offset-4 col-md-6" style="color: red;">
+      Ajouter un rendez-vous
+    </div>
+    <form (ngSubmit)="addAppointment()" [formGroup]="appointmentForm">
+      <div class="form-group row mb-2">
+        <label class="col-md-4 col-form-label" for="nameId">Nom :</label>
+        <div class="col-md-8">
+          <input type="text" class="form-control" id="nameId" placeholder="Nom" formControlName="title" [ngClass]="{'is-invalid': (appointmentForm.get('title').touched || appointmentForm.get('title').dirty) && !appointmentForm.get('title').valid }">
+          <span class="invalid-feedback">
+            <span *ngIf="appointmentForm.get('title').errors?.required">
+              Veuillez entrez le nom de votre rendez-vous.
+            </span>
+            <span *ngIf="appointmentForm.get('title').errors?.minLength">
+              Le nom n'est pas valide. Il doit obligatoirement avoir au moins 3 caractères.
+            </span>
+          </span>
+        </div>
+      </div>
+      <div class="form-group row mb-2">
+        <label class="col-md-4 col-form-label" for="dateId">Date :</label>
+        <div class="col-md-8">
+          <input type="date" class="form-control" id="dateId" placeholder="Date" formControlName="date" [ngClass]="{'is-invalid': (appointmentForm.get('date').touched || appointmentForm.get('date').dirty) && !appointmentForm.get('date').valid }">
+          <span class="invalid-feedback">
+            <span *ngIf="appointmentForm.get('date').errors?.required">
+              Veuillez entrez la date de votre rendez-vous.
+            </span>
+          </span>
+          <span class="error">
+            <span>{{ errorDate }}</span>
+          </span>
+        </div>
+      </div>
+      <div class="form-group row mb-2">
+        <label class="col-md-4 col-form-label" for="hourId">Heure :</label>
+        <div class="col-md-8">
+          <input type="time" class="form-control" id="hourId" placeholder="Heure" formControlName="hour" [ngClass]="{'is-invalid': (appointmentForm.get('hour').touched || appointmentForm.get('hour').dirty) && !appointmentForm.get('hour').valid }">
+          <span class="invalid-feedback">
+            <span *ngIf="appointmentForm.get('hour').errors?.required">
+              Veuillez entrez l'heure de votre rendez-vous.
+            </span>
+          </span>
+        </div>
+      </div>
+      <div class="form-group row mb-2">
+        <label class="col-md-4 col-form-label" for="hourId">Informations supplémentaires :</label>
+        <div class="col-md-8">
+          <textarea name="name" class="form-control" rows="1" cols="5" formControlName="additional_informations" [ngClass]="{'is-invalid': (appointmentForm.get('additional_informations').touched || appointmentForm.get('additional_informations').dirty) && !appointmentForm.get('additional_informations').valid }"></textarea>
+        </div>
+      </div>
+      <div class="form-group row mb-3">
+        <div class="offset-md-3 col-md-8">
+          <button class="btn btn-primary mr-3"
+            type="submit"
+            [title]="appointmentForm.valid ? 'Valider' : 'Le formulaire n\'est pas valide'"
+            [disabled]="!appointmentForm.valid">
+            Se connecter
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div  class="offset-1 col-md-11 fond">
+    <full-calendar locale="fr" [firstDay]="1" [events]="appointment" [buttonText]="{today: 'aujourd\'hui'}" defaultView="dayGridMonth" [plugins]="calendarPlugins"></full-calendar>
+  </div>
+</div>
