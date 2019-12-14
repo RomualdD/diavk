@@ -25,7 +25,11 @@ export class CalendarComponent implements OnInit {
   appointment: Appointment;
   tabAppointment= [];
   date= [];
+  name:string;
+  dateEvent:string;
   result: any;
+  showModal: boolean;
+  calendarOptions: any;
 
   constructor(private appointmentService: AppointmentService, private fb: FormBuilder) { }
 
@@ -82,6 +86,14 @@ export class CalendarComponent implements OnInit {
         complete: () => console.log('ok')
       });
     }
+  }
+
+  eventClick(model: any) {
+    console.log(model);
+    this.showModal = true;
+  }
+  hide() {
+    this.showModal = false;
   }
 
 }

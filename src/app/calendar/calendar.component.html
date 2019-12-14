@@ -59,13 +59,38 @@
             type="submit"
             [title]="appointmentForm.valid ? 'Valider' : 'Le formulaire n\'est pas valide'"
             [disabled]="!appointmentForm.valid">
-            Se connecter
+            Ajouter
           </button>
         </div>
       </div>
     </form>
   </div>
   <div  class="offset-1 col-md-11 fond">
-    <full-calendar locale="fr" [firstDay]="1" [events]="appointment" [buttonText]="{today: 'aujourd\'hui'}" defaultView="dayGridMonth" [plugins]="calendarPlugins"></full-calendar>
+    <full-calendar locale="fr" (eventClick)="eventClick($event)" eventTextColor="white" [firstDay]="1" [events]="appointment" [buttonText]="{today: 'aujourd\'hui'}" defaultView="dayGridMonth" [plugins]="calendarPlugins"></full-calendar>
   </div>
 </div>
+
+<!-- The Modal -->
+  <div class="modal" id="myModal" [style.display]="showModal ? 'block' : 'none'">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">{{ name }}</h4>
+          <button type="button" class="close" data-dismiss="modal" (click) = "hide()">&times;</button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          Event Start From : {{ date }}
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal" (click) = "hide()">Close</button>
+        </div>
+
+      </div>
+    </div>
+  </div>

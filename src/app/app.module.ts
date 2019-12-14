@@ -55,6 +55,7 @@ import { ProfilComponent } from './profil/profil.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { AccueilComponent } from './accueil/accueil.component';
 import { CalendarComponent } from './calendar/calendar.component';
+import { SuiviComponent } from './suivi/suivi.component';
 
 
 
@@ -77,7 +78,8 @@ const appRoutes: Routes = [
     ProfilComponent,
     PageNotFoundComponent,
     AccueilComponent,
-    CalendarComponent
+    CalendarComponent,
+    SuiviComponent
   ],
   imports: [
     ReactiveFormsModule,
